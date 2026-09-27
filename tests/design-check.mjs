@@ -1,0 +1,16 @@
+import {chromium} from '@playwright/test';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1050}});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.goto('http://localhost:3000');await page.getByText('Total applications',{exact:true}).waitFor();
+await page.screenshot({path:'/tmp/trajectory-glass-light.png',fullPage:true});
+await page.getByRole('button',{name:'Dark appearance'}).click();
+await page.screenshot({path:'/tmp/trajectory-glass-dark.png',fullPage:true});
+await page.setViewportSize({width:390,height:844});
+await page.screenshot({path:'/tmp/trajectory-glass-mobile.png',fullPage:true});
+if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile overflow');
+await page.getByRole('button',{name:'Applications',exact:true}).click();
+await page.getByLabel('Search applications').fill('Visa');
+await page.getByRole('button',{name:'Details for Visa'}).click();await page.getByRole('dialog').waitFor();
+if(errors.length)throw Error(errors.join('\n'));
+console.log('Light/dark screenshots, mobile layout, search and details verified.');await browser.close();
