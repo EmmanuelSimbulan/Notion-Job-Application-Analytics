@@ -48,3 +48,9 @@ The inspected schema has **no dedicated application source, industry, work arran
 Salary has euro display formatting, but that is not evidence of each record's currency, and pay periods are unknown. Individual raw values are retained; aggregate salary distributions are withheld. Current stage counts are not a historical funnel. Historical conversion and time-between-stage reporting require a separate dated stage-event history and are not implemented for this schema. Source outcome analysis and salary distributions are unavailable for the current data. Optional mapped event dates support event counts, upcoming dates, overdue active follow-ups, and average first-response timing.
 
 The initial connector SQL snapshot flattens rich text; it is used only for analytics, never as a basis for editing source content. Notion API sync replaces it with current property values.
+
+## Public GitHub Pages demo
+
+https://EmmanuelSimbulan.github.io/Notion-Job-Application-Analytics/
+
+GitHub Pages hosts a static, clearly labeled demo with **fictional applications**. It never includes the private snapshot or a Notion token, and it does not call the local API. Live Notion refresh requires the local Node server described above. The Actions workflow builds with `VITE_DEMO=true` and publishes only `dist/`. Do not add Notion credentials as Vite variables or embed private data in a Pages artifact.
